@@ -1,23 +1,34 @@
-package models;
+package ru.chagay.adv.models;
 
 import javax.persistence.*;
-import java.sql.Blob;
 
 @Entity
 @Table(name = "ad")
-public class Ad {
+public class Advertisement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
+
+    @Column(name="name")
     private String name;
-    private Blob text;
+
+    @Lob
+    @Column(name="text", columnDefinition="blob")
+    private byte[] text;
+
+    @Column(name="phone")
     private String phone;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cat_id")
     private Category category;
 
-    public Ad() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    private Company company;
+
+    public Advertisement() {
     }
 
     public Long getId() {
@@ -36,11 +47,11 @@ public class Ad {
         this.name = name;
     }
 
-    public Blob getText() {
+    public byte[] getText() {
         return text;
     }
 
-    public void setText(Blob text) {
+    public void setText(byte[] text) {
         this.text = text;
     }
 

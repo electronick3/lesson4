@@ -1,22 +1,34 @@
-package models;
+package ru.chagay.adv.models;
 
-import java.sql.Blob;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "company")
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
+
+    @Column(name="name")
     private String name;
-    private Blob descript;
-    private Blob address;
+
+    @Lob
+    @Column(name="descript", columnDefinition="blob")
+    private byte[] descript;
+
+    @Lob
+    @Column(name="address", columnDefinition="blob")
+    private byte[] address;
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Advertisement> ads;
 
     public Company() {
     }
 
-    public Company(String name, Blob descript, Blob address) {
+    public Company(String name, byte[] descript, byte[] address) {
         this.name = name;
         this.descript = descript;
         this.address = address;
@@ -38,19 +50,19 @@ public class Company {
         this.name = name;
     }
 
-    public Blob getDescript() {
+    public byte[] getDescript() {
         return descript;
     }
 
-    public void setDescript(Blob descript) {
+    public void setDescript(byte[] descript) {
         this.descript = descript;
     }
 
-    public Blob getAddress() {
+    public byte[] getAddress() {
         return address;
     }
 
-    public void setAddress(Blob address) {
+    public void setAddress(byte[] address) {
         this.address = address;
     }
 }

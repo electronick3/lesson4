@@ -1,4 +1,4 @@
-package models;
+package ru.chagay.adv.models;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,26 +10,29 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
+
+    @Column(name="name")
     private String name;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Ad> ads;
+    private List<Advertisement> ads;
 
     public Category() {
     }
 
     public Category(String name) {
         this.name = name;
-        ads = new ArrayList<Ad>();
+        ads = new ArrayList<Advertisement>();
     }
 
-    public void addAd(Ad ad) {
+    public void addAd(Advertisement ad) {
         ad.setCategory(this);
         ads.add(ad);
     }
 
-    public void removeAuto(Ad ad) {
+    public void removeAuto(Advertisement ad) {
         ads.remove(ad);
     }
 
@@ -49,11 +52,11 @@ public class Category {
         this.name = name;
     }
 
-    public List<Ad> getAds() {
+    public List<Advertisement> getAds() {
         return ads;
     }
 
-    public void setAds(List<Ad> ads) {
+    public void setAds(List<Advertisement> ads) {
         this.ads = ads;
     }
 }
