@@ -23,17 +23,20 @@ CREATE TABLE IF NOT EXISTS `ad` (
   `name` varchar(255) NOT NULL,
   `text` text NOT NULL,
   `phone` varchar(255) NOT NULL,
+  `company_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`),
-  KEY `FK1_category` (`cat_id`),
-  CONSTRAINT `FK1_category` FOREIGN KEY (`cat_id`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `FK1_category_ad` (`cat_id`),
+  KEY `FK2_company_ad` (`company_id`),
+  CONSTRAINT `FK1_category_ad` FOREIGN KEY (`cat_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK2_company_ad` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Объявления';
 
--- Дамп данных таблицы adv.ad: ~0 rows (приблизительно)
+-- Дамп данных таблицы adv.ad: ~1 rows (приблизительно)
 DELETE FROM `ad`;
 /*!40000 ALTER TABLE `ad` DISABLE KEYS */;
-INSERT INTO `ad` (`id`, `cat_id`, `name`, `text`, `phone`) VALUES
-	(1, 1, 'Мазда 3', 'Отличный автомобиль', '+79485236982');
+INSERT INTO `ad` (`id`, `cat_id`, `name`, `text`, `phone`, `company_id`) VALUES
+	(1, 1, 'Мазда 3', 'Отличный автомобиль', '+79485236982', 2);
 /*!40000 ALTER TABLE `ad` ENABLE KEYS */;
 
 -- Дамп структуры для таблица adv.category
@@ -44,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Категория';
 
--- Дамп данных таблицы adv.category: ~0 rows (приблизительно)
+-- Дамп данных таблицы adv.category: ~3 rows (приблизительно)
 DELETE FROM `category`;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
 INSERT INTO `category` (`id`, `name`) VALUES
@@ -61,13 +64,13 @@ CREATE TABLE IF NOT EXISTS `company` (
   `address` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Компания';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Компания';
 
--- Дамп данных таблицы adv.company: ~0 rows (приблизительно)
+-- Дамп данных таблицы adv.company: ~1 rows (приблизительно)
 DELETE FROM `company`;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
 INSERT INTO `company` (`id`, `name`, `descript`, `address`) VALUES
-	(1, 'ООО Рога и копыта', 'Фирма', 'г. Москва \r\nЛенина 367');
+	(2, 'Компания', 'описание', 'адрес');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
